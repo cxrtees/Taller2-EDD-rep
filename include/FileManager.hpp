@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-class Reproductor; // forward declaration, evita include circular
+class Reproductor;
 
 class FileManager {
 public:
@@ -13,13 +13,15 @@ public:
     static bool cargarStatus(const std::string& nombreArchivo, Reproductor& reproductor);
     static bool guardarStatus(const std::string& nombreArchivo, Reproductor& reproductor);
 
-    // helpers
+    // Ranking de reproducciones por ID de canción
+    static bool cargarRanking(const std::string& nombreArchivo, Reproductor& reproductor);
+    static bool guardarRanking(const std::string& nombreArchivo, Reproductor& reproductor);
+
+    // Helpers
     static std::string trim(const std::string& s);
     static char detectarDelimitador(const std::string& line);
-
     static std::string escape(const std::string& s);
     static std::string unescape(const std::string& s);
-
-    static int toIntSafe(const std::string& s, int def);
+    static int  toIntSafe(const std::string& s, int def);
     static bool toBoolSafe(const std::string& s, bool def);
 };

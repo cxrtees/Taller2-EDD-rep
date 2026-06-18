@@ -1,71 +1,35 @@
 #include "../include/Cancion.hpp"
-using namespace std;
 
-Cancion::Cancion() {
-    this->idInterno = 0;
-    this->nombreCancion = "";
-    this->nombreArtista = "";
-    this->nombreAlbum = "";
-    this->anio = 0;
-    this->duracionSegundos = 0;
-    this->ubicacionArchivo = "";
-}
+Cancion::Cancion()
+    : idInterno(0), nombreCancion(""), nombreArtista(""),
+      nombreAlbum(""), anio(0), duracionSegundos(0),
+      ubicacionArchivo(""), reproducciones(0) {}
 
-Cancion::Cancion(int idInterno, string nombreCancion, string nombreArtista, string nombreAlbum, int anio, int duracionSegundos, string ubicacionArchivo) {
-    this->idInterno = idInterno;
-    this->nombreCancion = nombreCancion;
-    this->nombreArtista = nombreArtista;
-    this->nombreAlbum = nombreAlbum;
-    this->anio = anio;
-    this->duracionSegundos = duracionSegundos;
-    this->ubicacionArchivo = ubicacionArchivo;
-}
+Cancion::Cancion(int idInterno, string nombreCancion, string nombreArtista,
+                 string nombreAlbum, int anio, int duracionSegundos,
+                 string ubicacionArchivo, int reproducciones)
+    : idInterno(idInterno), nombreCancion(nombreCancion),
+      nombreArtista(nombreArtista), nombreAlbum(nombreAlbum),
+      anio(anio), duracionSegundos(duracionSegundos),
+      ubicacionArchivo(ubicacionArchivo), reproducciones(reproducciones) {}
 
-int Cancion::getIdInterno() const {
-    return this->idInterno;
-}
-string Cancion::getNombreCancion() const {
-    return this->nombreCancion;
-}
-string Cancion::getNombreArtista() const {
-    return this->nombreArtista;
-}
-string Cancion::getNombreAlbum() const {
-    return this->nombreAlbum;
-}
-int Cancion::getAnio() const {
-    return this->anio;
-}
-int Cancion::getDuracionSegundos() const {
-    return this->duracionSegundos;
-}
-string Cancion::getUbicacionArchivo() const {
-    return this->ubicacionArchivo;
-}
+int    Cancion::getIdInterno()        const { return idInterno; }
+string Cancion::getNombreCancion()    const { return nombreCancion; }
+string Cancion::getNombreArtista()    const { return nombreArtista; }
+string Cancion::getNombreAlbum()      const { return nombreAlbum; }
+int    Cancion::getAnio()             const { return anio; }
+int    Cancion::getDuracionSegundos() const { return duracionSegundos; }
+string Cancion::getUbicacionArchivo() const { return ubicacionArchivo; }
+int    Cancion::getReproducciones()   const { return reproducciones; }
 
-void Cancion::setIdInterno(int idInterno) {
-    this->idInterno = idInterno;
-}
-void Cancion::setNombreCancion(string nombreCancion) {
-    this->nombreCancion = nombreCancion;
-}
-void Cancion::setNombreArtista(string nombreArtista) {
-    this->nombreArtista = nombreArtista;
-}
-void Cancion::setNombreAlbum(string nombreAlbum) {
-    this->nombreAlbum = nombreAlbum;
-}
-void Cancion::setAnio(int anio) {
-    this->anio = anio;
-}
-void Cancion::setDuracionSegundos(int duracionSegundos) {
-    this->duracionSegundos = duracionSegundos;
-}
-void Cancion::setUbicacionArchivo(string ubicacionArchivo) {
-    this->ubicacionArchivo = ubicacionArchivo;
-}
+void Cancion::setIdInterno(int v)             { idInterno = v; }
+void Cancion::setNombreCancion(string v)      { nombreCancion = v; }
+void Cancion::setNombreArtista(string v)      { nombreArtista = v; }
+void Cancion::setNombreAlbum(string v)        { nombreAlbum = v; }
+void Cancion::setAnio(int v)                  { anio = v; }
+void Cancion::setDuracionSegundos(int v)      { duracionSegundos = v; }
+void Cancion::setUbicacionArchivo(string v)   { ubicacionArchivo = v; }
+void Cancion::setReproducciones(int v)        { reproducciones = v; }
+void Cancion::incrementarReproducciones()     { reproducciones++; }
 
-Cancion::~Cancion() {
-    // destructor :b
-}
-
+Cancion::~Cancion() {}
