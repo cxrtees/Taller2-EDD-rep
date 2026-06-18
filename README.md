@@ -1,4 +1,4 @@
-# Taller 1 - Estructuras de Datos
+# Taller 2 - Estructuras de Datos
 
 ## Descripción
 Este proyecto corresponde al **Taller 1** de la asignatura **Estructuras de Datos**.
