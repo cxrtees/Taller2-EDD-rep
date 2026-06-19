@@ -55,7 +55,26 @@ void Reproductor::setCancionActual(Cancion c) { this->cancionActual = c; }
 void Reproductor::clearListaActual() { this->listaReproduccionActual.clear(); }
 void Reproductor::appendListaActual(Cancion c) { this->listaReproduccionActual.insertLast(c); }
 void Reproductor::clearRegistro() { this->cancionesRegistradas.clear(); }
+void Reproductor::setReproduccionesCancion(int idCancion, int reproducciones) {
+    if (reproducciones < 0) reproducciones = 0;
 
+    for (int i = 0; i < this->cancionesRegistradas.getSize(); i++) {
+        Cancion c = this->cancionesRegistradas.get(i);
+
+        if (c.getIdInterno() == idCancion) {
+            c.setReproducciones(reproducciones);
+
+            this->cancionesRegistradas.remove(i);
+            this->cancionesRegistradas.insertAt(i, c); 
+
+            if (this->hayCancionActual && this->cancionActual.getIdInterno() == idCancion) {
+                this->cancionActual.setReproducciones(reproducciones);
+            }
+
+            return;
+        }
+    }
+}
 
 void Reproductor::actualizarCicloBaseDesdeListaActual() {
     this->cicloBase.clear();

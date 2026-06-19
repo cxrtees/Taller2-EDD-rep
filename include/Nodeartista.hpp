@@ -6,7 +6,7 @@
 struct EntradaArtista {
     std::string nombre;
     int reproducciones;
-    A_ALV* canciones; 
+    A_AVL* canciones; 
 
     EntradaArtista() : nombre(""), reproducciones(0), canciones(nullptr) {}
 }; 

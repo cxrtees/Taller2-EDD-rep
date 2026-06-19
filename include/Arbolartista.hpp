@@ -23,7 +23,7 @@ private:
 
     void destruir(NodoArtista* nodo);
     int contar(NodoArtista* nodo) const;
-    void inorden(NodoArtista* nodo, EntradaArtista& arreglo, int maxSize, int& indice) const;
+    void inorden(NodoArtista* nodo, EntradaArtista* arreglo, int maxSize, int& indice) const;
 
 public:
     Arbol_Artistas();

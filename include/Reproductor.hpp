@@ -23,10 +23,10 @@ private:
     int modoRepeticion;
 
     // ── Nuevas estructuras Taller 2 ───────────────────────────────────────
-    A_Trie       A_trie;        // Trie para búsqueda de canciones
-    A_Artistas   A_artistas;    // AVL de artistas (cada uno con su AVL de canciones)
-    A_HeapCanciones A_heapCanciones;   // Heap para Top 10 canciones
-    A_HeapArtistas  A_heapArtistas;    // Heap para Top 10 artistas
+    A_Trie       Arbol_trie;        // Trie para búsqueda de canciones
+    Arbol_Artistas   Arbol_artistas;   // AVL de artistas (cada uno con su AVL de canciones)
+    A_HeapCanciones Arbol_heapCanciones;   // Heap para Top 10 canciones
+    A_HeapArtistas  Arbol_heapArtistas;    // Heap para Top 10 artistas
 
     // ── Utilidades de consola ─────────────────────────────────────────────
     void limpiarConsola();
@@ -87,6 +87,7 @@ public:
     void clearListaActual();
     void appendListaActual(Cancion c);
     void clearRegistro();
+    void setReproduccionesCancion(int idCancion, int reproducciones);
 
     // ── Operaciones del registro ──────────────────────────────────────────
     void agregarCancionAlRegistro(Cancion cancion);

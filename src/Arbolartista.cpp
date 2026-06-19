@@ -9,8 +9,8 @@ Arbol_Artistas::~Arbol_Artistas() {
 std::string Arbol_Artistas::toLower(const std::string& texto) const {
     std::string r = texto;
     for (size_t i = 0; i < r.size(); i++) {
-        if (r[i] >= "A" && r[i] <= "Z") {
-            r[i] = char(r[i] - "A" + "a");
+        if (r[i] >= 'A' && r[i] <= 'Z') {
+            r[i] = char(r[i] - 'A' + 'a');
         }
     }
     return r;
@@ -127,7 +127,7 @@ int Arbol_Artistas::contar(NodoArtista* nodo) const {
     return 1 + contar(nodo->izquierda) + contar(nodo->derecha);
 }
 
-void Arbol_Artistas::inorden(NodoArtista* nodo, EntradaArtista& arreglo, int maxSize, int& indice) const {
+void Arbol_Artistas::inorden(NodoArtista* nodo, EntradaArtista* arreglo, int maxSize, int& indice) const {
     if (!nodo || indice >= maxSize) return;
 
     inorden(nodo->izquierda, arreglo, maxSize, indice);

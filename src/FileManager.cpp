@@ -164,24 +164,7 @@ bool FileManager::cargarRanking(const std::string& nombreArchivo, Reproductor& r
         int reps = toIntSafe(line.substr(coma + 1), 0);
         if (id < 0 || reps <= 0) continue;
 
-        // Actualizar en la lista de canciones registradas
-        int n = reproductor.getCantidadCancionesRegistradas();
-        for (int i = 0; i < n; i++) {
-            if (reproductor.getCancionRegistrada(i).getIdInterno() == id) {
-                Cancion c = reproductor.getCancionRegistrada(i);
-                c.setReproducciones(reps);
-                reproductor.eliminarCancionDelRegistro(i);
-                // Reinsertar en la misma posición
-                // No hay insertAt en la interfaz pública, usamos append y reconstruimos
-                // Usamos sincronizarReproduccionesEnRegistro via un workaround:
-                // Eliminamos y reinsertamos al final es incorrecto, así que
-                // exponemos un setter por índice usando appendListaActual que no aplica aquí.
-                // La solución limpia: usamos clearRegistro + reinsertar todo,
-                // pero eso es costoso. Mejor: agregamos método público.
-                reproductor.setReproduccionesCancion(id, reps);
-                break;
-            }
-        }
+        reproductor.setReproduccionesCancion(id, reps);        
     }
     return true;
 }
