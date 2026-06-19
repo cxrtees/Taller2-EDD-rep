@@ -3,7 +3,7 @@
 #include "Cancion.hpp"
 #include "Trie.hpp"
 #include "AVL.hpp"
-#include "ArbolArtistas.hpp"
+#include "Arbolartista.hpp"
 #include "Heap.hpp"
 #include <string>
 
