@@ -75,6 +75,24 @@ void Reproductor::setReproduccionesCancion(int idCancion, int reproducciones) {
         }
     }
 }
+void Reproductor::registrarReproduccion(const Cancion& c) {
+    int id = c.getIdInterno();
+    if (id <= 0) return;
+
+    int nuevasReproducciones = c.getReproducciones() + 1;
+
+    for (int i = 0; i < this->cancionesRegistradas.getSize(); i++) {
+        Cancion registrada = this->cancionesRegistradas.get(i);
+
+        if (registrada.getIdInterno() == id) {
+            nuevasReproducciones = registrada.getReproducciones() + 1;
+            break;
+        }
+    }
+
+    this->setReproduccionesCancion(id, nuevasReproducciones);
+    FileManager::guardarRanking("song_ranking.txt", *this);
+}
 
 void Reproductor::actualizarCicloBaseDesdeListaActual() {
     this->cicloBase.clear();
@@ -109,6 +127,7 @@ void Reproductor::reproducirCancionDelRegristro(int index) {
     this->cancionActual = this->cancionesRegistradas.get(index);
     this->hayCancionActual = true;
     this->estadoReproduccion = "reproduciendo";
+    registrarReproduccion(this->cancionActual);
 }
 
 void Reproductor::agregarCancionAListaActual(int index) {
@@ -130,6 +149,7 @@ void Reproductor::togglePlayPause() {
             this->cancionActual = this->listaReproduccionActual.popFirst();
             this->hayCancionActual = true;
             this->estadoReproduccion = "reproduciendo";
+            registrarReproduccion(this->cancionActual);
         }
         return;
     }
@@ -157,6 +177,7 @@ void Reproductor::anterior() {
     this->cancionActual = this->historial.popFirst();
     this->hayCancionActual = true;
     this->estadoReproduccion = "reproduciendo";
+    registrarReproduccion(this->cancionActual);
 }
 
 void Reproductor::siguiente() {
@@ -184,6 +205,7 @@ void Reproductor::siguiente() {
         this->cancionActual = this->listaReproduccionActual.popFirst();
         this->hayCancionActual = true;
         this->estadoReproduccion = "reproduciendo";
+        registrarReproduccion(this->cancionActual);
         return;
     }
 
@@ -211,6 +233,7 @@ void Reproductor::siguiente() {
     this->cancionActual = this->listaReproduccionActual.popFirst();
     this->hayCancionActual = true;
     this->estadoReproduccion = "reproduciendo";
+    registrarReproduccion(this->cancionActual);
 }
 
 void Reproductor::cambiarModoAleatorio() {
@@ -383,6 +406,7 @@ void Reproductor::menuListaActual() {
             this->cancionActual = this->listaReproduccionActual.popFirst();
             this->hayCancionActual = true;
             this->estadoReproduccion = "reproduciendo";
+            registrarReproduccion(this->cancionActual);
 
             return; 
         }
@@ -537,6 +561,8 @@ void Reproductor::run() {
     } else {
         FileManager::guardarStatus("status.cfg", *this);
     }
+
+    FileManager::cargarRanking("song_ranking.txt", *this);
 
     if (this->cancionesRegistradas.isEmpty()) {
         this->hayCancionActual = false;

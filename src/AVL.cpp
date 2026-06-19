@@ -119,11 +119,15 @@ NodoAVL* A_AVL::eliminar(NodoAVL* nodo, const std::string& clave) {
     return rebalancear(nodo);
 }
 
-void A_AVL::inorden(NodoAVL* nodo, Cancion* arreglo, int& indice) const {
-    if (!nodo) return;
-    inorden(nodo->izquierda, arreglo, indice);
-    arreglo[indice++] = nodo->cancion;
-    inorden(nodo->derecha, arreglo, indice);
+void A_AVL::inorden(NodoAVL* nodo, Cancion* arreglo, int maxSize, int& indice) const {
+   if (!nodo || indice >= maxSize) return;
+
+    inorden(nodo->izquierda, arreglo, maxSize, indice);
+
+    if (indice < maxSize) {
+        arreglo[indice++] = nodo->cancion;
+    }
+    inorden(nodo->derecha, arreglo, maxSize, indice);
 }
 
 int A_AVL::contarNodos(NodoAVL* nodo) const {
@@ -142,8 +146,10 @@ void A_AVL::eliminar(const std::string& nombreCancion) {
 }
 
 int A_AVL::obtenerEnOrden(Cancion* arreglo, int maxSize) const {
+    if (maxSize <= 0) return 0;
+
     int indice = 0;
-    inorden(raiz, arreglo, indice);
+    inorden(raiz, arreglo, maxSize, indice);
     return indice;
 }
 

@@ -19,7 +19,7 @@ private:
     NodoAVL* eliminar(NodoAVL* nodo, const std::string& clave);
     NodoAVL* minimo(NodoAVL* nodo) const;
 
-    void inorden(NodoAVL* nodo, Cancion* arreglo, int& indice) const;
+    void inorden(NodoAVL* nodo, Cancion* arreglo, int maxSize, int& indice) const;
     void eliminarArbol(NodoAVL* nodo);
     int contarNodos(NodoAVL* nodo) const;
 
