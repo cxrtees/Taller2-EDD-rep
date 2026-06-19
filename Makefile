@@ -8,7 +8,14 @@ SRC = src/main.cpp \
       src/Node.cpp \
       src/List.cpp \
       src/Reproductor.cpp \
-      src/FileManager.cpp
+      src/FileManager.cpp \
+      src/NodeAVL.cpp \
+      src/AVL.cpp \
+      src/Nodeartista.cpp \
+      src/Arbolartista.cpp \
+      src/TriNode.cpp \
+      src/Trie.cpp \
+      src/Heap.cpp
 
 .PHONY: all run clean
 
