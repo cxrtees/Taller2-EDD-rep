@@ -11,7 +11,7 @@ private:
     int anio;
     int duracionSegundos;
     string ubicacionArchivo;
-    int reproducciones; // contador de veces reproducida
+    int reproducciones;
 
 public:
     Cancion();

@@ -5,10 +5,6 @@
 
 using namespace std;
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Menú: Lista de reproducción actual (Taller 1)
-// ─────────────────────────────────────────────────────────────────────────────
-
 void Reproductor::menuListaActual() {
     if (cancionesRegistradas.isEmpty()) return;
     while (true) {
@@ -31,7 +27,7 @@ void Reproductor::menuListaActual() {
             Cancion c = listaReproduccionActual.get(i);
             cout << (i + 1) << ". " << c.getNombreCancion() << " - " << c.getNombreArtista() << "\n";
         }
-        cout << "Opciones:\nS<num> - Saltar a la cancion seleccionada\nV - Volver al menu principal\nIngrese Opcion: ";
+        cout << "Opciones:\nS - Saltar a la cancion seleccionada\nV - Volver al menu principal\nIngrese Opcion: ";
         string op = leerLinea();
         if (op.empty()) continue;
         if (op[0] == 'V' || op[0] == 'v') return;
@@ -53,10 +49,6 @@ void Reproductor::menuListaActual() {
     }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Menú: Canciones registradas (Taller 1, ahora con soporte Trie + AVL)
-// ─────────────────────────────────────────────────────────────────────────────
-
 void Reproductor::menuCanciones() {
     while (true) {
         limpiarConsola();
@@ -76,10 +68,10 @@ void Reproductor::menuCanciones() {
             }
         }
         cout << "Opciones:\n";
-        cout << "R<num> - Reproducir cancion seleccionada\n";
-        cout << "A<num> - Agregar cancion al final de la lista actual\n";
+        cout << "R      - Reproducir cancion seleccionada\n";
+        cout << "A      - Agregar cancion al final de la lista actual\n";
         cout << "N      - Agregar nueva cancion al registro\n";
-        cout << "D<num> - Eliminar cancion seleccionada\n";
+        cout << "D      - Eliminar cancion seleccionada\n";
         cout << "V      - Volver al menu principal\n";
         cout << "Ingrese Opcion: ";
 
@@ -105,8 +97,8 @@ void Reproductor::menuCanciones() {
             Cancion c(newId, nombre, artista, album, anio, dur, ubic, 0);
             cancionesRegistradas.insertLast(c);
             // Agregar a estructuras nuevas
-            A_trie.insertar(c);
-            A_artistas.insertar(c);
+            arbolTrie.insertar(c);
+            arbolArtistas.insertar(c);
 
             FileManager::guardarCanciones("music_source.txt", *this);
             return;
@@ -139,7 +131,6 @@ void Reproductor::menuCanciones() {
             int idDel = toDel.getIdInterno();
             eliminarCancionDelRegistro(index);
 
-            // Limpiar de listas internas
             auto filtrarLista = [&](List& lista) {
                 List nueva;
                 for (int i = 0; i < lista.getSize(); i++) {
@@ -164,9 +155,7 @@ void Reproductor::menuCanciones() {
     }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Menú F: Búsqueda de canciones (Trie)
-// ─────────────────────────────────────────────────────────────────────────────
+
 
 void Reproductor::menuBusqueda() {
     while (true) {
@@ -175,11 +164,10 @@ void Reproductor::menuBusqueda() {
         cout << "Buscar canciones que contengan: ";
         string texto = leerLinea();
 
-        if (texto.empty()) return; // Enter vacío → menú principal
+        if (texto.empty()) return;
 
-        // Buscar en el Trie
         ListaResultados resultado;
-        A_trie.buscar(texto, resultado);
+        arbolTrie.buscar(texto, resultado);
 
         limpiarConsola();
         cout << "Busqueda de canciones\n\n";
@@ -192,8 +180,6 @@ void Reproductor::menuBusqueda() {
             continue;
         }
 
-        // Construir arreglo de resultados en el mismo orden del registro
-        // (para mostrar numerado y poder seleccionar)
         const int MAX_RES = 1024;
         Cancion encontradas[MAX_RES];
         int cantEncontradas = 0;
@@ -210,8 +196,8 @@ void Reproductor::menuBusqueda() {
         }
 
         cout << "\nOpciones:\n";
-        cout << "R<num> - Reproducir cancion seleccionada\n";
-        cout << "A<num> - Agregar cancion al final de la lista actual\n";
+        cout << "R      - Reproducir cancion seleccionada\n";
+        cout << "A      - Agregar cancion al final de la lista actual\n";
         cout << "F      - Repetir busqueda con un texto diferente\n";
         cout << "V      - Volver al menu principal\n";
         cout << "Ingrese Opcion: ";
@@ -230,7 +216,6 @@ void Reproductor::menuBusqueda() {
         if (num <= 0 || num > cantEncontradas) continue;
 
         Cancion elegida = encontradas[num - 1];
-        // Encontrar el índice en el registro
         int idxReg = -1;
         for (int i = 0; i < cancionesRegistradas.getSize(); i++) {
             if (cancionesRegistradas.get(i).getIdInterno() == elegida.getIdInterno()) {
@@ -253,10 +238,6 @@ void Reproductor::menuBusqueda() {
     }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Menú T: TOP 10 - selección inicial
-// ─────────────────────────────────────────────────────────────────────────────
-
 void Reproductor::menuTop() {
     while (true) {
         limpiarConsola();
@@ -275,17 +256,12 @@ void Reproductor::menuTop() {
     }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Menú T → C: TOP 10 canciones
-// ─────────────────────────────────────────────────────────────────────────────
-
 void Reproductor::menuTopCanciones() {
     while (true) {
         limpiarConsola();
         cout << "Ranking TOP 10 Canciones mas escuchadas:\n\n";
 
-        // Extraer top desde una COPIA del heap para no destruir el original
-        A_HeapCanciones copia;
+        HeapCanciones copia;
         int n = cancionesRegistradas.getSize();
         for (int i = 0; i < n; i++) {
             Cancion c = cancionesRegistradas.get(i);
@@ -313,8 +289,8 @@ void Reproductor::menuTopCanciones() {
         }
 
         cout << "\nOpciones:\n";
-        cout << "R<num> - Reproducir cancion seleccionada\n";
-        cout << "A<num> - Agregar cancion al final de la lista actual\n";
+        cout << "R      - Reproducir cancion seleccionada\n";
+        cout << "A      - Agregar cancion al final de la lista actual\n";
         cout << "A      - Top 10 artistas mas escuchados\n";
         cout << "V      - Volver al menu principal\n";
         cout << "Ingrese Opcion: ";
@@ -359,28 +335,19 @@ void Reproductor::menuTopCanciones() {
     }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Menú T → A: TOP 10 artistas
-// ─────────────────────────────────────────────────────────────────────────────
-
 void Reproductor::menuTopArtistas() {
     while (true) {
         limpiarConsola();
         cout << "Ranking TOP 10 Artistas mas escuchados:\n\n";
 
-        // Construir copia del heap de artistas desde el árbol de artistas
         A_HeapArtistas copiaArt;
         const int MAX_ART = 2048;
         EntradaArtista arts[MAX_ART];
-        int nArts = A_artistas.obtenerTodos(arts, MAX_ART);
+        int nArts = arbolArtistas.obtenerTodos(arts, MAX_ART);
         for (int i = 0; i < nArts; i++) {
             if (arts[i].reproducciones > 0)
                 copiaArt.insertar(EntradaHeapArtista(arts[i].nombre, arts[i].reproducciones));
         }
-        // Recalcular reproducciones por artista sumando las canciones
-        // (el árbol de artistas no guarda reproducciones directamente en el nodo,
-        //  se calculan desde las canciones)
-        // Reconstruir con valores actualizados desde las canciones del registro
         A_HeapArtistas copiaCorrecta;
         for (int i = 0; i < nArts; i++) {
             int totalRep = 0;
@@ -421,7 +388,7 @@ void Reproductor::menuTopArtistas() {
         }
 
         cout << "\nOpciones:\n";
-        cout << "S<num> - Mostrar canciones del artista\n";
+        cout << "S      - Mostrar canciones del artista\n";
         cout << "C      - Top 10 canciones mas escuchadas\n";
         cout << "V      - Volver al menu principal\n";
         cout << "Ingrese Opcion: ";
@@ -440,7 +407,6 @@ void Reproductor::menuTopArtistas() {
             if (num <= 0 || num > cantTop) continue;
 
             string artistaElegido = top[num - 1].nombreArtista;
-            // Buscar el AVL de canciones de ese artista en A_artistas
             for (int i = 0; i < nArts; i++) {
                 auto toLow = [](string s) {
                     for (size_t k = 0; k < s.size(); k++)
@@ -456,11 +422,7 @@ void Reproductor::menuTopArtistas() {
     }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Menú T → A → S: Canciones de un artista (AVL inorden)
-// ─────────────────────────────────────────────────────────────────────────────
-
-void Reproductor::menuCancionesArtista(const string& artista, A_AVL* avlCanciones) {
+void Reproductor::menuCancionesArtista(const string& artista, AVL* avlCanciones) {
     while (true) {
         limpiarConsola();
         cout << "Ranking TOP 10 Artistas mas escuchados:\n";
@@ -482,8 +444,8 @@ void Reproductor::menuCancionesArtista(const string& artista, A_AVL* avlCancione
         }
 
         cout << "\nOpciones:\n";
-        cout << "R<num> - Reproducir cancion seleccionada\n";
-        cout << "A<num> - Agregar cancion al final de la lista actual\n";
+        cout << "R      - Reproducir cancion seleccionada\n";
+        cout << "A      - Agregar cancion al final de la lista actual\n";
         cout << "V      - Volver al listado de TOP 10 artistas\n";
         cout << "X      - Volver al menu principal\n";
         cout << "Ingrese Opcion: ";
@@ -492,8 +454,6 @@ void Reproductor::menuCancionesArtista(const string& artista, A_AVL* avlCancione
         if (op.empty()) continue;
         if (op[0] == 'V' || op[0] == 'v') return;
         if (op[0] == 'X' || op[0] == 'x') {
-            // Señal de volver al menú principal: salimos de todos los submenús
-            // Lo marcamos con una doble salida retornando desde aquí
             return;
         }
 
@@ -528,15 +488,10 @@ void Reproductor::menuCancionesArtista(const string& artista, A_AVL* avlCancione
     }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Bucle principal run()
-// ─────────────────────────────────────────────────────────────────────────────
-
 void Reproductor::run() {
     FileManager::cargarCanciones("music_source.txt", *this);
     FileManager::cargarRanking("song_ranking.txt", *this);
 
-    // Inicializar estructuras de árbol con las canciones cargadas
     inicializarEstructuras();
 
     if (FileManager::existeArchivo("status.cfg"))

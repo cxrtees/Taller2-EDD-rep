@@ -1,9 +1,9 @@
-#pragma once 
+#pragma once
 #include "Nodeartista.hpp"
 #include "Cancion.hpp"
 #include <string>
 
-class Arbol_Artistas {
+class ArbolArtistas {
 
 private: 
     NodoArtista* raiz;
@@ -26,11 +26,11 @@ private:
     void inorden(NodoArtista* nodo, EntradaArtista* arreglo, int maxSize, int& indice) const;
 
 public:
-    Arbol_Artistas();
-    ~Arbol_Artistas();
+    ArbolArtistas();
+    ~ArbolArtistas();
 
     void insertar(const Cancion& cancion);
-    A_AVL* buscarCancionesDeArtista(const std::string& artista) const;
+    AVL* buscarCancionesDeArtista(const std::string& artista) const;
 
     int obtenerTodos(EntradaArtista* arreglo, int maxSize) const;
     int getCantidad() const;

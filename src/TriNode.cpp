@@ -5,14 +5,12 @@ TrieNode::TrieNode(char c)
       listaIds(nullptr), esFin(false) {}
 
 TrieNode::~TrieNode() {
-    // Eliminar lista de IDs
     IdNodo* cur = listaIds;
     while (cur) {
         IdNodo* sig = cur->siguiente;
         delete cur;
         cur = sig;
     }
-    // Los hijos y hermanos los maneja el Trie
 }
 
 void TrieNode::agregarId(int id) {

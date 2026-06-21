@@ -1,12 +1,12 @@
 #include "../include/Arbolartista.hpp"
 
-Arbol_Artistas::Arbol_Artistas() : raiz(nullptr) {}
+ArbolArtistas::ArbolArtistas() : raiz(nullptr) {}
 
-Arbol_Artistas::~Arbol_Artistas() {
+ArbolArtistas::~ArbolArtistas() {
     limpiar();
 }
 
-std::string Arbol_Artistas::toLower(const std::string& texto) const {
+std::string ArbolArtistas::toLower(const std::string& texto) const {
     std::string r = texto;
     for (size_t i = 0; i < r.size(); i++) {
         if (r[i] >= 'A' && r[i] <= 'Z') {
@@ -16,19 +16,19 @@ std::string Arbol_Artistas::toLower(const std::string& texto) const {
     return r;
 }
 
-int Arbol_Artistas::altura(NodoArtista* nodo) const {
+int ArbolArtistas::altura(NodoArtista* nodo) const {
     return nodo ? nodo->altura : 0;
 }
 
-int Arbol_Artistas::maximo(int a, int b) const {
+int ArbolArtistas::maximo(int a, int b) const {
     return a > b ? a : b;
 }
 
-int Arbol_Artistas::balance(NodoArtista* nodo) const {
+int ArbolArtistas::balance(NodoArtista* nodo) const {
     return nodo ? altura(nodo->izquierda) - altura(nodo->derecha) : 0;
 }
 
-NodoArtista* Arbol_Artistas::rotarDerecha(NodoArtista* y) {
+NodoArtista* ArbolArtistas::rotarDerecha(NodoArtista* y) {
     NodoArtista* x = y->izquierda;
     NodoArtista* t2 = x->derecha;
 
@@ -41,7 +41,7 @@ NodoArtista* Arbol_Artistas::rotarDerecha(NodoArtista* y) {
     return x;
 }
 
-NodoArtista* Arbol_Artistas::rotarIzquierda(NodoArtista* x) {
+NodoArtista* ArbolArtistas::rotarIzquierda(NodoArtista* x) {
     NodoArtista* y = x->derecha;
     NodoArtista* t2 = y->izquierda;
 
@@ -54,7 +54,7 @@ NodoArtista* Arbol_Artistas::rotarIzquierda(NodoArtista* x) {
     return y;
 }
 
-NodoArtista* Arbol_Artistas::rebalancear(NodoArtista* nodo) {
+NodoArtista* ArbolArtistas::rebalancear(NodoArtista* nodo) {
     if (!nodo) return nodo;
 
     nodo->altura = 1 + maximo(altura(nodo->izquierda), altura(nodo->derecha));
@@ -81,7 +81,7 @@ NodoArtista* Arbol_Artistas::rebalancear(NodoArtista* nodo) {
     return nodo;
 }
 
-NodoArtista* Arbol_Artistas::insertar(NodoArtista* nodo, const Cancion& cancion) {
+NodoArtista* ArbolArtistas::insertar(NodoArtista* nodo, const Cancion& cancion) {
     std::string nombreArtista = cancion.getNombreArtista();
     std::string clave = toLower(nombreArtista);
 
@@ -101,7 +101,7 @@ NodoArtista* Arbol_Artistas::insertar(NodoArtista* nodo, const Cancion& cancion)
     return rebalancear(nodo);
 }
 
-NodoArtista* Arbol_Artistas::buscar(NodoArtista* nodo, const std::string& clave) const {
+NodoArtista* ArbolArtistas::buscar(NodoArtista* nodo, const std::string& clave) const {
     if (!nodo) return nullptr;
 
     if (clave == nodo->clave) return nodo;
@@ -113,7 +113,7 @@ NodoArtista* Arbol_Artistas::buscar(NodoArtista* nodo, const std::string& clave)
     return buscar(nodo->derecha, clave);
 }
 
-void Arbol_Artistas::destruir(NodoArtista* nodo) {
+void ArbolArtistas::destruir(NodoArtista* nodo) {
     if (!nodo) return;
 
     destruir(nodo->izquierda);
@@ -122,12 +122,12 @@ void Arbol_Artistas::destruir(NodoArtista* nodo) {
     delete nodo;
 }
 
-int Arbol_Artistas::contar(NodoArtista* nodo) const {
+int ArbolArtistas::contar(NodoArtista* nodo) const {
     if (!nodo) return 0;
     return 1 + contar(nodo->izquierda) + contar(nodo->derecha);
 }
 
-void Arbol_Artistas::inorden(NodoArtista* nodo, EntradaArtista* arreglo, int maxSize, int& indice) const {
+void ArbolArtistas::inorden(NodoArtista* nodo, EntradaArtista* arreglo, int maxSize, int& indice) const {
     if (!nodo || indice >= maxSize) return;
 
     inorden(nodo->izquierda, arreglo, maxSize, indice);
@@ -141,11 +141,11 @@ void Arbol_Artistas::inorden(NodoArtista* nodo, EntradaArtista* arreglo, int max
     inorden(nodo->derecha, arreglo, maxSize, indice);
 }
 
-void Arbol_Artistas::insertar(const Cancion& cancion) {
+void ArbolArtistas::insertar(const Cancion& cancion) {
     raiz = insertar(raiz, cancion);
 }
 
-A_AVL* Arbol_Artistas::buscarCancionesDeArtista(const std::string& artista) const {
+AVL* ArbolArtistas::buscarCancionesDeArtista(const std::string& artista) const {
     NodoArtista* nodo = buscar(raiz, toLower(artista));
 
     if (!nodo) return nullptr;
@@ -153,21 +153,21 @@ A_AVL* Arbol_Artistas::buscarCancionesDeArtista(const std::string& artista) cons
     return &(nodo->canciones);
 }
 
-int Arbol_Artistas::obtenerTodos(EntradaArtista* arreglo, int maxSize) const {
+int ArbolArtistas::obtenerTodos(EntradaArtista* arreglo, int maxSize) const {
     int indice = 0;
     inorden(raiz, arreglo, maxSize, indice);
     return indice;
 }
 
-int Arbol_Artistas::getCantidad() const {
+int ArbolArtistas::getCantidad() const {
     return contar(raiz);
 }
 
-bool Arbol_Artistas::estaVacio() const {
+bool ArbolArtistas::estaVacio() const {
     return raiz == nullptr;
 }
 
-void Arbol_Artistas::limpiar() {
+void ArbolArtistas::limpiar() {
     destruir(raiz);
     raiz = nullptr;
 }

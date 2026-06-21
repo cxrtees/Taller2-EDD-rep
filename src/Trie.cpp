@@ -1,8 +1,6 @@
 #include "../include/Trie.hpp"
 #include <cctype>
 
-// ─── ListaResultados ────────────────────────────────────────────────────────
-
 ListaResultados::~ListaResultados() {
     limpiar();
 }
@@ -35,17 +33,16 @@ void ListaResultados::limpiar() {
     cantidad = 0;
 }
 
-// ─── A_Trie ─────────────────────────────────────────────────────────────────
 
-A_Trie::A_Trie() {
+Trie::Trie() {
     raiz = new TrieNode('\0');
 }
 
-A_Trie::~A_Trie() {
+Trie::~Trie() {
     eliminarArbol(raiz);
 }
 
-std::string A_Trie::toLower(const std::string& s) const {
+std::string Trie::toLower(const std::string& s) const {
     std::string result = s;
     for (size_t i = 0; i < result.size(); i++) {
         if (result[i] >= 'A' && result[i] <= 'Z')
@@ -54,9 +51,8 @@ std::string A_Trie::toLower(const std::string& s) const {
     return result;
 }
 
-void A_Trie::eliminarArbol(TrieNode* nodo) {
+void Trie::eliminarArbol(TrieNode* nodo) {
     if (!nodo) return;
-    // Eliminar todos los hijos (primer hijo + hermanos)
     TrieNode* hijo = nodo->primerHijo;
     while (hijo) {
         TrieNode* sig = hijo->hermano;
@@ -66,21 +62,19 @@ void A_Trie::eliminarArbol(TrieNode* nodo) {
     delete nodo;
 }
 
-TrieNode* A_Trie::obtenerOCrearHijo(TrieNode* padre, char c) {
-    // Buscar si ya existe el hijo
+TrieNode* Trie::obtenerOCrearHijo(TrieNode* padre, char c) {
     TrieNode* cur = padre->primerHijo;
     while (cur) {
         if (cur->caracter == c) return cur;
         cur = cur->hermano;
     }
-    // Crear nuevo hijo e insertarlo al frente de la lista de hijos
     TrieNode* nuevo = new TrieNode(c);
     nuevo->hermano = padre->primerHijo;
     padre->primerHijo = nuevo;
     return nuevo;
 }
 
-TrieNode* A_Trie::buscarHijo(TrieNode* padre, char c) const {
+TrieNode* Trie::buscarHijo(TrieNode* padre, char c) const {
     TrieNode* cur = padre->primerHijo;
     while (cur) {
         if (cur->caracter == c) return cur;
@@ -89,14 +83,12 @@ TrieNode* A_Trie::buscarHijo(TrieNode* padre, char c) const {
     return nullptr;
 }
 
-void A_Trie::insertarString(const std::string& texto, int idCancion) {
+void Trie::insertarString(const std::string& texto, int idCancion) {
     std::string lower = toLower(texto);
-    // Insertar todos los sufijos para permitir búsqueda por subcadena
     for (size_t inicio = 0; inicio < lower.size(); inicio++) {
         TrieNode* actual = raiz;
         for (size_t i = inicio; i < lower.size(); i++) {
             char c = lower[i];
-            // Solo indexar caracteres alfanuméricos y espacio
             if (!((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == ' '))
                 c = ' ';
             actual = obtenerOCrearHijo(actual, c);
@@ -106,7 +98,7 @@ void A_Trie::insertarString(const std::string& texto, int idCancion) {
     }
 }
 
-void A_Trie::eliminarString(const std::string& texto, int idCancion) {
+void Trie::eliminarString(const std::string& texto, int idCancion) {
     std::string lower = toLower(texto);
     for (size_t inicio = 0; inicio < lower.size(); inicio++) {
         TrieNode* actual = raiz;
@@ -121,7 +113,7 @@ void A_Trie::eliminarString(const std::string& texto, int idCancion) {
     }
 }
 
-TrieNode* A_Trie::buscarNodo(const std::string& prefijo) const {
+TrieNode* Trie::buscarNodo(const std::string& prefijo) const {
     std::string lower = toLower(prefijo);
     TrieNode* actual = raiz;
     for (size_t i = 0; i < lower.size(); i++) {
@@ -134,7 +126,7 @@ TrieNode* A_Trie::buscarNodo(const std::string& prefijo) const {
     return actual;
 }
 
-void A_Trie::recolectarIds(TrieNode* nodo, ListaResultados& resultado) const {
+void Trie::recolectarIds(TrieNode* nodo, ListaResultados& resultado) const {
     if (!nodo) return;
     if (nodo->esFin) {
         TrieNode::IdNodo* cur = nodo->listaIds;
@@ -143,7 +135,6 @@ void A_Trie::recolectarIds(TrieNode* nodo, ListaResultados& resultado) const {
             cur = cur->siguiente;
         }
     }
-    // Recorrer todos los hijos
     TrieNode* hijo = nodo->primerHijo;
     while (hijo) {
         recolectarIds(hijo, resultado);
@@ -151,25 +142,24 @@ void A_Trie::recolectarIds(TrieNode* nodo, ListaResultados& resultado) const {
     }
 }
 
-void A_Trie::insertar(const Cancion& cancion) {
+void Trie::insertar(const Cancion& cancion) {
     insertarString(cancion.getNombreCancion(), cancion.getIdInterno());
     insertarString(cancion.getNombreArtista(), cancion.getIdInterno());
 }
 
-void A_Trie::eliminar(const Cancion& cancion) {
+void Trie::eliminar(const Cancion& cancion) {
     eliminarString(cancion.getNombreCancion(), cancion.getIdInterno());
     eliminarString(cancion.getNombreArtista(), cancion.getIdInterno());
 }
 
-void A_Trie::buscar(const std::string& texto, ListaResultados& resultado) const {
+void Trie::buscar(const std::string& texto, ListaResultados& resultado) const {
     resultado.limpiar();
     if (texto.empty()) return;
     TrieNode* nodo = buscarNodo(texto);
     if (!nodo) return;
-    // Recolectar todos los IDs desde este nodo hacia abajo
     recolectarIds(nodo, resultado);
 }
 
-bool A_Trie::estaVacio() const {
+bool Trie::estaVacio() const {
     return raiz->primerHijo == nullptr;
 }

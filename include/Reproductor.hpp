@@ -9,7 +9,7 @@
 
 class Reproductor {
 private:
-    // ── Listas del Taller 1 ───────────────────────────────────────────────
+
     List cancionesRegistradas;
     List listaReproduccionActual;
     List historial;
@@ -22,42 +22,40 @@ private:
     bool modoAleatorio;
     int modoRepeticion;
 
-    // ── Nuevas estructuras Taller 2 ───────────────────────────────────────
-    A_Trie       Arbol_trie;        // Trie para búsqueda de canciones
-    Arbol_Artistas   Arbol_artistas;   // AVL de artistas (cada uno con su AVL de canciones)
-    A_HeapCanciones Arbol_heapCanciones;   // Heap para Top 10 canciones
-    A_HeapArtistas  Arbol_heapArtistas;    // Heap para Top 10 artistas
 
-    // ── Utilidades de consola ─────────────────────────────────────────────
+    Trie      arbolTrie;
+    ArbolArtistas arbolArtistas;
+    HeapCanciones Arbol_heapCanciones;
+    A_HeapArtistas  Arbol_heapArtistas;
+
+    //utilidades de consola
     void limpiarConsola();
     std::string leerLinea();
 
-    // ── Pantalla principal ────────────────────────────────────────────────
+    // Pantalla principal
     void mostrarPantallaPrincipal();
     void mostrarLineaActual();
 
-    // ── Menús Taller 1 ────────────────────────────────────────────────────
+    // Menús del Sistema
     void menuListaActual();
     void menuCanciones();
+    void menuBusqueda();
+    void menuTop();
+    void menuTopCanciones();
+    void menuTopArtistas();
+    void menuCancionesArtista(const std::string& artista, AVL* avlCanciones);
 
-    // ── Menús Taller 2 ────────────────────────────────────────────────────
-    void menuBusqueda();                    // F - Buscar canciones
-    void menuTop();                         // T - TOP 10
-    void menuTopCanciones();                // TOP 10 canciones
-    void menuTopArtistas();                 // TOP 10 artistas
-    void menuCancionesArtista(const std::string& artista, A_AVL* avlCanciones);
-
-    // ── Helpers de ciclo de reproducción ─────────────────────────────────
+    // ciclo de reproducción
     void actualizarCicloBaseDesdeListaActual();
     void recargarListaActualDesdeCicloBase();
 
-    // ── Inicialización de estructuras nuevas ─────────────────────────────
+    // Inicialización de estructuras
     void inicializarEstructuras();
 
-    // ── Helper: registrar reproducción de una canción ─────────────────────
+    //registrar reproducción
     void registrarReproduccion(const Cancion& c);
 
-    // ── Helper: sincronizar canción del registro con cancionActual ─────────
+    // sincronizar canción del registro
     void sincronizarReproduccionesEnRegistro(int idCancion, int reproducciones);
 
 public:
@@ -65,7 +63,7 @@ public:
 
     void run();
 
-    // ── Getters básicos ───────────────────────────────────────────────────
+    // Getters
     bool tieneCancionActual();
     std::string getEstadoReproduccion();
     bool getModoAleatorio();
@@ -77,7 +75,7 @@ public:
     Cancion getCancionRegistrada(int index);
     Cancion getCancionEnListaActual(int index);
 
-    // ── Setters (usados por FileManager) ─────────────────────────────────
+    //Setters
     void setHayCancionActual(bool v);
     void setEstadoReproduccion(const std::string& e);
     void setModoAleatorio(bool v);
@@ -89,11 +87,11 @@ public:
     void clearRegistro();
     void setReproduccionesCancion(int idCancion, int reproducciones);
 
-    // ── Operaciones del registro ──────────────────────────────────────────
+    //registro
     void agregarCancionAlRegistro(Cancion cancion);
     void eliminarCancionDelRegistro(int index);
 
-    // ── Reproducción ──────────────────────────────────────────────────────
+    //Reproducción
     void reproducirCancionDelRegristro(int index);
     void agregarCancionAListaActual(int index);
 

@@ -2,7 +2,7 @@
 #include "Cancion.hpp"
 #include <string>
 
-// Entrada para el Heap de canciones
+
 struct EntradaHeapCancion {
     Cancion cancion;
     int reproducciones;
@@ -10,7 +10,6 @@ struct EntradaHeapCancion {
     EntradaHeapCancion(const Cancion& c, int r) : cancion(c), reproducciones(r) {}
 };
 
-// Entrada para el Heap de artistas
 struct EntradaHeapArtista {
     std::string nombreArtista;
     int reproducciones;
@@ -18,9 +17,8 @@ struct EntradaHeapArtista {
     EntradaHeapArtista(const std::string& n, int r) : nombreArtista(n), reproducciones(r) {}
 };
 
-// Max-Heap de canciones (por reproducciones, desempate alfabético)
-// Implementado con arreglo dinámico manual (sin STL)
-class A_HeapCanciones {
+
+class HeapCanciones {
 private:
     EntradaHeapCancion* datos;
     int capacidad;
@@ -36,29 +34,22 @@ private:
     std::string toLower(const std::string& s) const;
 
 public:
-    A_HeapCanciones(int capacidadInicial = 64);
-    ~A_HeapCanciones();
+    HeapCanciones(int capacidadInicial = 64);
+    ~HeapCanciones();
 
     void insertar(const EntradaHeapCancion& entrada);
     EntradaHeapCancion extraerMaximo();
     const EntradaHeapCancion& verMaximo() const;
 
-    // Actualiza las reproducciones de una canción por ID
-    // Si no existe, la inserta
     void actualizarOInsertar(const Cancion& cancion, int reproducciones);
 
-    // Elimina una canción del heap por ID
     void eliminar(int idCancion);
 
     int getTamanio() const { return tamanio; }
     bool estaVacio() const { return tamanio == 0; }
-
-    // Extrae los top N elementos (los destruye del heap, úsalo en copia)
-    // Retorna la cantidad extraída
     int extraerTop(int n, EntradaHeapCancion* resultado);
 };
 
-// Max-Heap de artistas (por reproducciones, desempate alfabético)
 class A_HeapArtistas {
 private:
     EntradaHeapArtista* datos;
@@ -81,10 +72,8 @@ public:
     void insertar(const EntradaHeapArtista& entrada);
     EntradaHeapArtista extraerMaximo();
 
-    // Actualiza o inserta artista
     void actualizarOInsertar(const std::string& artista, int reproducciones);
 
-    // Elimina artista por nombre
     void eliminar(const std::string& artista);
 
     int getTamanio() const { return tamanio; }

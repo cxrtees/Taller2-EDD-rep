@@ -3,10 +3,6 @@
 #include "../include/Cancion.hpp"
 #include <fstream>
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Helpers
-// ─────────────────────────────────────────────────────────────────────────────
-
 bool FileManager::existeArchivo(const std::string& nombreArchivo) {
     std::ifstream in(nombreArchivo.c_str());
     return in.good();
@@ -86,9 +82,6 @@ std::string FileManager::unescape(const std::string& s) {
     return out;
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Canciones (music_source.txt) - formato: id,nombre,artista,album,anio,dur,ubic
-// ─────────────────────────────────────────────────────────────────────────────
 
 bool FileManager::cargarCanciones(const std::string& nombreArchivo, Reproductor& reproductor) {
     std::ifstream in(nombreArchivo.c_str());
@@ -143,13 +136,9 @@ bool FileManager::guardarCanciones(const std::string& nombreArchivo, Reproductor
     return true;
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Ranking (song_ranking.txt) - formato: id,reproducciones
-// ─────────────────────────────────────────────────────────────────────────────
-
 bool FileManager::cargarRanking(const std::string& nombreArchivo, Reproductor& reproductor) {
     std::ifstream in(nombreArchivo.c_str());
-    if (!in.is_open()) return false;  // archivo inexistente: no es error
+    if (!in.is_open()) return false;
 
     std::string line;
     while (std::getline(in, line)) {
@@ -181,9 +170,6 @@ bool FileManager::guardarRanking(const std::string& nombreArchivo, Reproductor& 
     return true;
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Status (status.cfg)
-// ─────────────────────────────────────────────────────────────────────────────
 
 static std::string serializeSong(const Cancion& c) {
     std::string s;

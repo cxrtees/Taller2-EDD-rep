@@ -3,9 +3,8 @@
 #include "Cancion.hpp"
 #include <string>
 
-// Árbol AVL que almacena canciones ordenadas alfabéticamente por nombre
-// Se usa uno por cada artista en el árbol de artistas
-class A_AVL {
+
+class AVL {
 private:
     NodoAVL* raiz;
 
@@ -26,17 +25,13 @@ private:
     std::string toLower(const std::string& s) const;
 
 public:
-    A_AVL();
-    ~A_AVL();
+    AVL();
+    ~AVL();
 
-    // Inserta una canción ordenada por nombre de canción (en minúsculas)
     void insertar(const Cancion& cancion);
 
-    // Elimina una canción por nombre
     void eliminar(const std::string& nombreCancion);
 
-    // Recorre en inorden y llena el arreglo dado (debe tener tamaño suficiente)
-    // Retorna la cantidad de elementos
     int obtenerEnOrden(Cancion* arreglo, int maxSize) const;
 
     int getCantidad() const;

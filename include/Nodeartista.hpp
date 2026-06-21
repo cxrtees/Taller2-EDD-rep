@@ -6,7 +6,7 @@
 struct EntradaArtista {
     std::string nombre;
     int reproducciones;
-    A_AVL* canciones; 
+    AVL* canciones;
 
     EntradaArtista() : nombre(""), reproducciones(0), canciones(nullptr) {}
 }; 
@@ -14,7 +14,7 @@ struct EntradaArtista {
 struct NodoArtista {
     std::string clave;
     std::string nombre;
-    A_AVL canciones;
+    AVL canciones;
     int altura;
     NodoArtista* izquierda;
     NodoArtista* derecha;
