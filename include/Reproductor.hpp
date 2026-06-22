@@ -26,7 +26,7 @@ private:
     Trie      arbolTrie;
     ArbolArtistas arbolArtistas;
     HeapCanciones Arbol_heapCanciones;
-    A_HeapArtistas  Arbol_heapArtistas;
+    ArbolHeapArtistas  Arbol_heapArtistas;
 
     //utilidades de consola
     void limpiarConsola();

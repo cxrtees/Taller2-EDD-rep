@@ -115,20 +115,20 @@ int HeapCanciones::extraerTop(int n, EntradaHeapCancion* resultado) {
     return extraidos;
 }
 
-A_HeapArtistas::A_HeapArtistas(int capacidadInicial)
+ArbolHeapArtistas::ArbolHeapArtistas(int capacidadInicial)
     : capacidad(capacidadInicial), tamanio(0) {
     datos = new EntradaHeapArtista[capacidad];
 }
 
-A_HeapArtistas::~A_HeapArtistas() {
+ArbolHeapArtistas::~ArbolHeapArtistas() {
     delete[] datos;
 }
 
-std::string A_HeapArtistas::toLower(const std::string& s) const {
+std::string ArbolHeapArtistas::toLower(const std::string& s) const {
     return heapToLower(s);
 }
 
-void A_HeapArtistas::expandir() {
+void ArbolHeapArtistas::expandir() {
     int nuevaCap = capacidad * 2;
     EntradaHeapArtista* nuevo = new EntradaHeapArtista[nuevaCap];
     for (int i = 0; i < tamanio; i++) nuevo[i] = datos[i];
@@ -137,13 +137,13 @@ void A_HeapArtistas::expandir() {
     capacidad = nuevaCap;
 }
 
-bool A_HeapArtistas::esMayor(const EntradaHeapArtista& a, const EntradaHeapArtista& b) const {
+bool ArbolHeapArtistas::esMayor(const EntradaHeapArtista& a, const EntradaHeapArtista& b) const {
     if (a.reproducciones != b.reproducciones)
         return a.reproducciones > b.reproducciones;
     return toLower(a.nombreArtista) < toLower(b.nombreArtista);
 }
 
-void A_HeapArtistas::subirHeap(int i) {
+void ArbolHeapArtistas::subirHeap(int i) {
     while (i > 0 && esMayor(datos[i], datos[padre(i)])) {
         EntradaHeapArtista tmp = datos[i];
         datos[i] = datos[padre(i)];
@@ -152,7 +152,7 @@ void A_HeapArtistas::subirHeap(int i) {
     }
 }
 
-void A_HeapArtistas::bajarHeap(int i) {
+void ArbolHeapArtistas::bajarHeap(int i) {
     int mayor = i;
     int iz = hijoIzq(i);
     int de = hijoDer(i);
@@ -166,20 +166,20 @@ void A_HeapArtistas::bajarHeap(int i) {
     }
 }
 
-void A_HeapArtistas::insertar(const EntradaHeapArtista& entrada) {
+void ArbolHeapArtistas::insertar(const EntradaHeapArtista& entrada) {
     if (tamanio >= capacidad) expandir();
     datos[tamanio++] = entrada;
     subirHeap(tamanio - 1);
 }
 
-EntradaHeapArtista A_HeapArtistas::extraerMaximo() {
+EntradaHeapArtista ArbolHeapArtistas::extraerMaximo() {
     EntradaHeapArtista max = datos[0];
     datos[0] = datos[--tamanio];
     if (tamanio > 0) bajarHeap(0);
     return max;
 }
 
-void A_HeapArtistas::actualizarOInsertar(const std::string& artista, int reproducciones) {
+void ArbolHeapArtistas::actualizarOInsertar(const std::string& artista, int reproducciones) {
     for (int i = 0; i < tamanio; i++) {
         if (toLower(datos[i].nombreArtista) == toLower(artista)) {
             datos[i].reproducciones = reproducciones;
@@ -191,7 +191,7 @@ void A_HeapArtistas::actualizarOInsertar(const std::string& artista, int reprodu
     insertar(EntradaHeapArtista(artista, reproducciones));
 }
 
-void A_HeapArtistas::eliminar(const std::string& artista) {
+void ArbolHeapArtistas::eliminar(const std::string& artista) {
     std::string clave = toLower(artista);
     for (int i = 0; i < tamanio; i++) {
         if (toLower(datos[i].nombreArtista) == clave) {
@@ -205,7 +205,7 @@ void A_HeapArtistas::eliminar(const std::string& artista) {
     }
 }
 
-int A_HeapArtistas::extraerTop(int n, EntradaHeapArtista* resultado) {
+int ArbolHeapArtistas::extraerTop(int n, EntradaHeapArtista* resultado) {
     int extraidos = 0;
     while (!estaVacio() && extraidos < n) {
         resultado[extraidos++] = extraerMaximo();

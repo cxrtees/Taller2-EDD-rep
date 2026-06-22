@@ -50,7 +50,7 @@ public:
     int extraerTop(int n, EntradaHeapCancion* resultado);
 };
 
-class A_HeapArtistas {
+class ArbolHeapArtistas {
 private:
     EntradaHeapArtista* datos;
     int capacidad;
@@ -66,8 +66,8 @@ private:
     std::string toLower(const std::string& s) const;
 
 public:
-    A_HeapArtistas(int capacidadInicial = 64);
-    ~A_HeapArtistas();
+    ArbolHeapArtistas(int capacidadInicial = 64);
+    ~ArbolHeapArtistas();
 
     void insertar(const EntradaHeapArtista& entrada);
     EntradaHeapArtista extraerMaximo();

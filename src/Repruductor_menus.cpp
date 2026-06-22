@@ -340,7 +340,7 @@ void Reproductor::menuTopArtistas() {
         limpiarConsola();
         cout << "Ranking TOP 10 Artistas mas escuchados:\n\n";
 
-        A_HeapArtistas copiaArt;
+        ArbolHeapArtistas copiaArt;
         const int MAX_ART = 2048;
         EntradaArtista arts[MAX_ART];
         int nArts = arbolArtistas.obtenerTodos(arts, MAX_ART);
@@ -348,7 +348,7 @@ void Reproductor::menuTopArtistas() {
             if (arts[i].reproducciones > 0)
                 copiaArt.insertar(EntradaHeapArtista(arts[i].nombre, arts[i].reproducciones));
         }
-        A_HeapArtistas copiaCorrecta;
+        ArbolHeapArtistas copiaCorrecta;
         for (int i = 0; i < nArts; i++) {
             int totalRep = 0;
             if (arts[i].canciones) {
