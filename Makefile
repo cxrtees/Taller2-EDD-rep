@@ -29,4 +29,4 @@ run: $(TARGET)
 	./$(TARGET)
 
 clean:
-	if exist $(TARGET) del /Q $(TARGET)
+	@if exist $(TARGET) del /Q $(TARGET)
