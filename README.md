@@ -155,13 +155,16 @@ La estructura actual del proyecto es la siguiente:
 ```text
 Taller2-EDD-rep
 │
-├── .gitignore
-├── Makefile
-├── music_source.txt
-├── README.md
-├── status.cfg
+├── .vscode
+│   └── settings.json
+│
+├── img
 │
 ├── include
+│   ├── Arbolartista.hpp
+│   ├── AVL.hpp
+│   ├── Cancion.hpp
+│   ├── FileManager.hpp
 │   ├── Heap.hpp
 │   ├── List.hpp
 │   ├── Node.hpp
@@ -171,22 +174,31 @@ Taller2-EDD-rep
 │   ├── Trie.hpp
 │   └── TrieNode.hpp
 │
-└── src
-    ├── Arbolartista.cpp
-    ├── AVL.cpp
-    ├── Cancion.cpp
-    ├── FileManager.cpp
-    ├── Heap.cpp
-    ├── List.cpp
-    ├── main.cpp
-    ├── Node.cpp
-    ├── Nodeartista.cpp
-    ├── NodeAVL.cpp
-    ├── Reproductor_menus.cpp
-    ├── Reproductor.cpp
-    ├── Trie.cpp
-    └── TriNode.cpp
+├── src
+│   ├── Arbolartista.cpp
+│   ├── AVL.cpp
+│   ├── Cancion.cpp
+│   ├── FileManager.cpp
+│   ├── Heap.cpp
+│   ├── List.cpp
+│   ├── main.cpp
+│   ├── Node.cpp
+│   ├── Nodeartista.cpp
+│   ├── NodeAVL.cpp
+│   ├── Reproductor_menus.cpp
+│   ├── Reproductor.cpp
+│   ├── Trie.cpp
+│   └── TriNode.cpp
+│
+├── .gitignore
+├── Makefile
+├── music_source.txt
+├── README.md
+└── status.cfg
 ```
+
+La carpeta `include` contiene los archivos de cabecera `.hpp`, donde se declaran las clases, atributos y métodos principales del proyecto. La carpeta `src` contiene los archivos `.cpp`, donde se implementa la lógica de cada clase. Además, la carpeta `img` almacena recursos visuales utilizados en el README, como el diagrama de clases, y `.vscode` contiene configuraciones locales del entorno de desarrollo.
+
 
 ## Instrucciones de Compilación y Ejecución
 
