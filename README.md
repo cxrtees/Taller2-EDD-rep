@@ -312,3 +312,7 @@ make clean
 * Se implementan estructuras de datos manuales.
 * El proyecto utiliza listas enlazadas, árboles AVL, árboles Trie y Heap.
 * El sistema busca aplicar los contenidos vistos en la asignatura de Estructuras de Datos.
+
+## Diagrama de Clases (Estándar UML)
+
+![Diagrama de Clases UML](img/diagrama_clases.png)
