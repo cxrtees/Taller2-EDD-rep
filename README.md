@@ -122,11 +122,6 @@ Luego se ejecuta con:
 mingw32-make clean
 ```
 
-#### Linux, Mac o WSL
-
-```bash
-make clean
-```
 
 ## Diagrama de Clases (Estándar UML)
 
