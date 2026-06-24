@@ -21,6 +21,7 @@ private:
     std::string estadoReproduccion;
     bool modoAleatorio;
     int modoRepeticion;
+    bool volverMenuPrincipalDesdeTop;
 
 
     Trie      arbolTrie;

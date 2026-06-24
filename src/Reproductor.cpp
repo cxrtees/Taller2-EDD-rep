@@ -25,6 +25,7 @@ Reproductor::Reproductor() {
     this->estadoReproduccion = "detenido";
     this->modoAleatorio = false;
     this->modoRepeticion = 0;
+    this->volverMenuPrincipalDesdeTop = false;
     srand((unsigned)time(nullptr));
 }
 

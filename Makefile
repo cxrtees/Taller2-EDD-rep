@@ -8,7 +8,7 @@ SRC = src/main.cpp \
       src/Node.cpp \
       src/List.cpp \
       src/Reproductor.cpp \
-      src/Repruductor_menus.cpp \
+      src/Reproductor_menus.cpp \
       src/FileManager.cpp \
       src/NodeAVL.cpp \
       src/AVL.cpp \

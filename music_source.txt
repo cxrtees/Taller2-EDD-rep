@@ -1,0 +1,5 @@
+1,Fire Dance,Vivid BAD Squad,Fire Dance (Single),2025,210,C:\musica\fire_dance.mp3
+2,PON PON PON,Kyary Pamyu Pamyu,PON PON PON,2011,240,C:\musica\ponponpon.mp3
+3,World is Mine,Ryo feat. Hatsune Miku,Supercell,2008,270,C:\musica\world_is_mine.mp3
+4,Crossing Field,LiSA,Sword Art Online,2012,250,C:\musica\crossing_field.mp3
+6,Radioactive,Imagine Dragons,Night Visions,2012,186,C:\musica\radioactive.mp3
