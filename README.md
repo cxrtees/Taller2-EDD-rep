@@ -26,38 +26,102 @@ Para cumplir con las restricciones de rendimiento del taller, no se utiliza la b
 
 ## Instrucciones de Compilación y Ejecución
 
-El proyecto está modularizado separando interfaces (`.hpp`) en la carpeta `include/` e implementaciones (`.cpp`) en la carpeta `src/`.
+El proyecto se compila y ejecuta desde consola. No depende de un IDE específico para su construcción.
 
-## Requisitos
-Para compilar y ejecutar este proyecto se requiere:
+El código fuente se encuentra separado en:
 
-- `g++`
-- `mingw32-make` en Windows
-  
-### Compilar
-Desde la raíz del proyecto, ejecutar:
+```text
+include/    # Archivos de cabecera .hpp
+src/        # Archivos de implementación .cpp
+```
+
+Antes de ejecutar, el archivo `music_source.txt` debe estar ubicado en la raíz del proyecto, al mismo nivel que el `Makefile`.
+
+### Requisitos
+
+Para compilar el proyecto se necesita:
+
+- Compilador `g++` compatible con C++17.
+- `make` o `mingw32-make`, según el sistema operativo.
+
+### Compilación con Makefile
+
+Desde una terminal ubicada en la raíz del proyecto, ejecutar:
+
+#### Windows con MinGW
 
 ```bash
 mingw32-make
 ```
-Esto generará el ejecutable: 
+
+#### Linux, Mac o WSL
+
 ```bash
+make
+```
+
+Esto genera el ejecutable:
+
+```text
 reproductor.exe
 ```
-### Ejecutar 
-Para ejecutar el programa: 
-```bash
-mingw32-make run
-```
-También se puede ejecutar directamente con:
+
+### Ejecución
+
+#### Windows
+
 ```bash
 .\reproductor.exe
 ```
-### Limpiar archivos generados 
-Para eliminar el ejecutable:
+
+O también:
+
+```bash
+mingw32-make run
+```
+
+#### Linux, Mac o WSL
+
+```bash
+./reproductor.exe
+```
+
+O también:
+
+```bash
+make run
+```
+
+### Compilación manual sin Makefile
+
+Si no se desea utilizar `make`, el proyecto también puede compilarse directamente con `g++` desde la raíz del proyecto:
+
+```bash
+g++ -std=c++17 -Wall -Wextra -Iinclude src/main.cpp src/Cancion.cpp src/Node.cpp src/List.cpp src/Reproductor.cpp src/Reproductor_menus.cpp src/FileManager.cpp src/NodeAVL.cpp src/AVL.cpp src/Nodeartista.cpp src/Arbolartista.cpp src/TriNode.cpp src/Trie.cpp src/Heap.cpp -o reproductor.exe
+```
+
+Luego se ejecuta con:
+
+#### Windows
+
+```bash
+.\reproductor.exe
+```
+
+#### Linux, Mac o WSL
+
+```bash
+./reproductor.exe
+```
+
+### Limpieza de archivos generados
+
+#### Windows con MinGW
+
 ```bash
 mingw32-make clean
 ```
+
 
 ## Diagrama de Clases (Estándar UML)
 
