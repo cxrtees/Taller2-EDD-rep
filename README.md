@@ -28,18 +28,36 @@ Para cumplir con las restricciones de rendimiento del taller, no se utiliza la b
 
 El proyecto está modularizado separando interfaces (`.hpp`) en la carpeta `include/` e implementaciones (`.cpp`) en la carpeta `src/`.
 
-### Requisitos del Sistema
-* Compilador GCC/G++ con soporte para el estándar **C++14** o superior.
-* Herramienta de automatización CMake (Versión 3.10 o superior).
+## Requisitos
+Para compilar y ejecutar este proyecto se requiere:
 
-### Compilación y Ejecución vía CMake (Recomendado)
-1. Abra una terminal en la carpeta raíz del proyecto.
-2. Genere el directorio de construcción y compile ejecutando los siguientes comandos:
-   ```bash
-   mkdir build
-   cd build
-   cmake ..
-   cmake --build .
+- `g++`
+- `mingw32-make` en Windows
+  
+### Compilar
+Desde la raíz del proyecto, ejecutar:
+
+```bash
+mingw32-make
+```
+Esto generará el ejecutable: 
+```bash
+reproductor.exe
+```
+### Ejecutar 
+Para ejecutar el programa: 
+```bash
+mingw32-make run
+```
+También se puede ejecutar directamente con:
+```bash
+.\reproductor.exe
+```
+### Limpiar archivos generados 
+Para eliminar el ejecutable:
+```bash
+mingw32-make clean
+```
 
 ## Diagrama de Clases (Estándar UML)
 
